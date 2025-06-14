@@ -219,7 +219,12 @@
                     <!-- Guest Actions -->
                     <div class="hidden sm:flex sm:items-center sm:space-x-3">
                         <a href="{{ route('login') }}" class="group relative px-6 py-2 text-sm font-medium text-slate-700 hover:text-sky-600 transition-all duration-300 transform hover:scale-105">
-                            <span class="relative z-10">Masuk</span>
+                            <span class="relative z-10 flex items-center space-x-2">
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                                </svg>
+                                <span>Masuk</span>
+                            </span>
                             <div class="absolute inset-0 rounded-xl bg-sky-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </a>
                         <a href="{{ route('register') }}" class="btn-primary text-sm group relative overflow-hidden">
@@ -227,7 +232,7 @@
                                 <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                                 </svg>
-                                <span>Daftar</span>
+                                <span>Daftar Nasabah</span>
                             </span>
                             <div class="absolute inset-0 bg-gradient-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </a>
@@ -334,7 +339,7 @@
                             <svg class="w-5 h-5 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                             </svg>
-                            <span class="font-medium">Daftar Sekarang</span>
+                            <span class="font-medium">Daftar Nasabah</span>
                         </div>
                         <div class="absolute inset-0 bg-gradient-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </a>

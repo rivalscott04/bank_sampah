@@ -136,61 +136,7 @@
 
 <body class="font-inter bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-lg border-b border-white/20" x-data="{ mobileMenuOpen: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold text-gradient">Bank Sampah</span>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-slate-700 hover:text-sky-600 font-medium transition-colors duration-200">Beranda</a>
-                    <a href="#features" class="text-slate-700 hover:text-sky-600 font-medium transition-colors duration-200">Fitur</a>
-                    <a href="#about" class="text-slate-700 hover:text-sky-600 font-medium transition-colors duration-200">Tentang</a>
-                    <a href="#contact" class="text-slate-700 hover:text-sky-600 font-medium transition-colors duration-200">Kontak</a>
-                    
-                    @auth
-                        <a href="{{ route('home') }}" class="btn-primary text-sm">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-slate-700 hover:text-sky-600 font-medium transition-colors duration-200">Masuk</a>
-                        <a href="{{ route('register') }}" class="btn-primary text-sm">Daftar</a>
-                    @endauth
-                </div>
-                
-                <!-- Mobile menu button -->
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors duration-200">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- Mobile Navigation -->
-            <div x-show="mobileMenuOpen" x-transition class="md:hidden py-4 border-t border-slate-200">
-                <div class="flex flex-col space-y-3">
-                    <a href="#home" class="text-slate-700 hover:text-sky-600 font-medium py-2 transition-colors duration-200">Beranda</a>
-                    <a href="#features" class="text-slate-700 hover:text-sky-600 font-medium py-2 transition-colors duration-200">Fitur</a>
-                    <a href="#about" class="text-slate-700 hover:text-sky-600 font-medium py-2 transition-colors duration-200">Tentang</a>
-                    <a href="#contact" class="text-slate-700 hover:text-sky-600 font-medium py-2 transition-colors duration-200">Kontak</a>
-                    
-                    @auth
-                        <a href="{{ route('home') }}" class="btn-primary text-sm w-full text-center mt-4">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-slate-700 hover:text-sky-600 font-medium py-2 transition-colors duration-200">Masuk</a>
-                        <a href="{{ route('register') }}" class="btn-primary text-sm w-full text-center mt-4">Daftar</a>
-                    @endauth
-                </div>
-            </div>
-        </div>
-    </nav>
+    @include('layouts.navigation')
 
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">

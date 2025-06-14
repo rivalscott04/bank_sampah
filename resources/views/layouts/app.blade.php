@@ -156,8 +156,8 @@
         @include('layouts.navigation')
 
         <!-- Page Content -->
-        <main class="flex-1">
-            {{ $slot }}
+        <main class="flex-1 pt-16">
+            @yield('content')
         </main>
         
         <!-- Footer -->

@@ -18,7 +18,7 @@ class AdminController extends Controller
         $totalNasabah = User::where('role', 'nasabah')->count();
         $totalTransaksi = Transaction::count();
         $totalSampah = Transaction::sum('weight'); // Total berat sampah dalam kg
-        $totalPendapatan = Transaction::sum('total_amount'); // Total pendapatan
+        $totalPendapatan = Transaction::sum('total_price'); // Total pendapatan
         $totalPoints = Point::sum('total_points');
         $pendingPickups = PickupRequest::where('status', 'pending')->count();
         
