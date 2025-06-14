@@ -16,7 +16,9 @@ class AdminController extends Controller
     public function dashboard()
     {
         $totalNasabah = User::where('role', 'nasabah')->count();
-        $totalTransactions = Transaction::count();
+        $totalTransaksi = Transaction::count();
+        $totalSampah = Transaction::sum('weight'); // Total berat sampah dalam kg
+        $totalPendapatan = Transaction::sum('total_amount'); // Total pendapatan
         $totalPoints = Point::sum('total_points');
         $pendingPickups = PickupRequest::where('status', 'pending')->count();
         
@@ -32,7 +34,9 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact(
             'totalNasabah',
-            'totalTransactions', 
+            'totalTransaksi',
+            'totalSampah', 
+            'totalPendapatan',
             'totalPoints',
             'pendingPickups',
             'recentTransactions',

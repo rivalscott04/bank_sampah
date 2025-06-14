@@ -7,7 +7,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NasabahController;
 
 // Guest routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
+
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 // Authentication routes
 Route::middleware('guest')->group(function () {
