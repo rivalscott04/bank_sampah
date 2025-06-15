@@ -21,12 +21,12 @@ class AdminController extends Controller
         $totalPendapatan = Transaction::sum('total_price'); // Total pendapatan
         $totalPoints = Point::sum('total_points');
         $pendingPickups = PickupRequest::where('status', 'pending')->count();
-        
+
         $recentTransactions = Transaction::with(['user', 'waste'])
             ->latest()
             ->take(5)
             ->get();
-            
+
         $recentPickups = PickupRequest::with(['user', 'waste'])
             ->latest()
             ->take(5)
@@ -35,7 +35,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact(
             'totalNasabah',
             'totalTransaksi',
-            'totalSampah', 
+            'totalSampah',
             'totalPendapatan',
             'totalPoints',
             'pendingPickups',
@@ -268,7 +268,7 @@ class AdminController extends Controller
         // Update user points (subtract old, add new)
         $userPoints = Point::where('user_id', $transaction->user_id)->first();
         $userPoints->subtractPoints($transaction->total_points);
-        
+
         $transaction->update([
             'user_id' => $request->user_id,
             'waste_id' => $request->waste_id,
@@ -289,7 +289,7 @@ class AdminController extends Controller
         // Subtract points from user
         $userPoints = Point::where('user_id', $transaction->user_id)->first();
         $userPoints->subtractPoints($transaction->total_points);
-        
+
         $transaction->delete();
         return redirect()->route('admin.transactions')->with('success', 'Transaksi berhasil dihapus.');
     }

@@ -11,7 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Authentication routes
 Route::middleware('guest')->group(function () {
@@ -26,7 +26,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    
+
     // Kelola Nasabah
     Route::get('/nasabah', [AdminController::class, 'nasabah'])->name('nasabah');
     Route::get('/nasabah/create', [AdminController::class, 'createNasabah'])->name('nasabah.create');
@@ -34,7 +34,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/nasabah/{user}/edit', [AdminController::class, 'editNasabah'])->name('nasabah.edit');
     Route::put('/nasabah/{user}', [AdminController::class, 'updateNasabah'])->name('nasabah.update');
     Route::delete('/nasabah/{user}', [AdminController::class, 'destroyNasabah'])->name('nasabah.destroy');
-    
+
     // Kelola Kategori
     Route::get('/categories', [AdminController::class, 'categories'])->name('categories');
     Route::get('/categories/create', [AdminController::class, 'createCategory'])->name('categories.create');
@@ -42,7 +42,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/categories/{category}/edit', [AdminController::class, 'editCategory'])->name('categories.edit');
     Route::put('/categories/{category}', [AdminController::class, 'updateCategory'])->name('categories.update');
     Route::delete('/categories/{category}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
-    
+
     // Kelola Sampah
     Route::get('/wastes', [AdminController::class, 'wastes'])->name('wastes');
     Route::get('/wastes/create', [AdminController::class, 'createWaste'])->name('wastes.create');
@@ -50,7 +50,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/wastes/{waste}/edit', [AdminController::class, 'editWaste'])->name('wastes.edit');
     Route::put('/wastes/{waste}', [AdminController::class, 'updateWaste'])->name('wastes.update');
     Route::delete('/wastes/{waste}', [AdminController::class, 'destroyWaste'])->name('wastes.destroy');
-    
+
     // Kelola Transaksi
     Route::get('/transactions', [AdminController::class, 'transactions'])->name('transactions');
     Route::get('/transactions/create', [AdminController::class, 'createTransaction'])->name('transactions.create');
@@ -58,11 +58,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/transactions/{transaction}/edit', [AdminController::class, 'editTransaction'])->name('transactions.edit');
     Route::put('/transactions/{transaction}', [AdminController::class, 'updateTransaction'])->name('transactions.update');
     Route::delete('/transactions/{transaction}', [AdminController::class, 'destroyTransaction'])->name('transactions.destroy');
-    
+
     // Kelola Permintaan Jemput
     Route::get('/pickup-requests', [AdminController::class, 'pickupRequests'])->name('pickup-requests');
     Route::put('/pickup-requests/{pickupRequest}/status', [AdminController::class, 'updatePickupStatus'])->name('pickup-requests.update-status');
-    
+
     // Kelola Poin
     Route::get('/points', [AdminController::class, 'points'])->name('points');
     Route::put('/points/{point}', [AdminController::class, 'updatePoints'])->name('points.update');
@@ -71,17 +71,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // Nasabah routes
 Route::middleware(['auth', 'nasabah'])->prefix('nasabah')->name('nasabah.')->group(function () {
     Route::get('/dashboard', [NasabahController::class, 'dashboard'])->name('dashboard');
-    
+
     // Profile
     Route::get('/profile', [NasabahController::class, 'profile'])->name('profile');
     Route::put('/profile', [NasabahController::class, 'updateProfile'])->name('profile.update');
-    
+
     // Lihat Daftar Sampah
     Route::get('/wastes', [NasabahController::class, 'wastes'])->name('wastes');
-    
+
     // Riwayat Transaksi
     Route::get('/transactions', [NasabahController::class, 'transactions'])->name('transactions');
-    
+
     // Permintaan Jemput Sampah
     Route::get('/pickup-requests', [NasabahController::class, 'pickupRequests'])->name('pickup-requests');
     Route::get('/pickup-requests/create', [NasabahController::class, 'createPickupRequest'])->name('pickup-requests.create');
