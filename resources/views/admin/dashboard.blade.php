@@ -61,7 +61,7 @@
                         <div class="ml-4">
                             <p class="text-sm font-medium text-slate-600">Sampah Terkumpul</p>
                             <p class="text-2xl font-bold text-slate-900">{{ $totalSampah ?? 89 }} <span
-                                    class="text-sm font-normal text-slate-500">ton</span></p>
+                                    class="text-sm font-normal text-slate-500">kg</span></p>
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
                         </div>
                     </a>
 
-                    <a href="#"
+                    <a href="{{ route('admin.pickup-requests') }}"
                         class="flex items-center p-4 rounded-lg border border-slate-200 hover:border-cyan-300 hover:bg-cyan-50 transition-all duration-200 group">
                         <div class="p-2 bg-cyan-100 rounded-lg group-hover:bg-cyan-200 transition-colors duration-200">
                             <svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,134 +205,167 @@
                 <div class="bg-white rounded-xl border border-slate-200 p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-lg font-bold text-slate-900">Transaksi Terbaru</h2>
-                        <a href="#" class="text-sm text-teal-600 hover:text-teal-700 font-medium">Lihat Semua</a>
+                        <a href="{{ route('admin.transactions') }}"
+                            class="text-sm text-teal-600 hover:text-teal-700 font-medium">Lihat Semua</a>
                     </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
-                                    <span class="text-teal-600 font-semibold text-sm">AR</span>
+                    @if ($recentTransactions->count() > 0)
+                        <div class="space-y-4">
+                            @foreach ($recentTransactions as $transaction)
+                                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                                            <span class="text-teal-600 font-semibold text-sm">
+                                                {{ strtoupper(substr($transaction->user->name ?? 'NA', 0, 1)) }}{{ strtoupper(substr(explode(' ', $transaction->user->name ?? 'NA')[1] ?? '', 0, 1)) }}
+                                            </span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="font-medium text-slate-900">
+                                                {{ $transaction->user->name ?? 'Customer' }}</p>
+                                            <p class="text-sm text-slate-500">{{ $transaction->waste->name ?? 'Sampah' }}
+                                                • {{ $transaction->weight }} kg</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-semibold text-slate-900">Rp
+                                            {{ number_format($transaction->total_price) }}</p>
+                                        @if ($transaction->status === 'completed')
+                                            <span
+                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                Selesai
+                                            </span>
+                                        @elseif ($transaction->status === 'processing')
+                                            <span
+                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                                                Proses
+                                            </span>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                                                {{ ucfirst($transaction->status) }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="ml-3">
-                                    <p class="font-medium text-slate-900">Ahmad Rizki</p>
-                                    <p class="text-sm text-slate-500">Plastik PET • 2.5 kg</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-slate-900">Rp 12.500</p>
-                                <span
-                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                                    Selesai
-                                </span>
-                            </div>
+                            @endforeach
                         </div>
-
-                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                                    <span class="text-emerald-600 font-semibold text-sm">SN</span>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="font-medium text-slate-900">Siti Nurhaliza</p>
-                                    <p class="text-sm text-slate-500">Kertas Koran • 5.0 kg</p>
-                                </div>
+                    @else
+                        <div class="text-center py-12">
+                            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
                             </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-slate-900">Rp 15.000</p>
-                                <span
-                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
-                                    Proses
-                                </span>
-                            </div>
+                            <p class="text-slate-500 font-medium">Belum ada transaksi</p>
+                            <p class="text-sm text-slate-400 mt-1">Menunggu transaksi pertama</p>
                         </div>
-
-                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-cyan-100 rounded-full flex items-center justify-center">
-                                    <span class="text-cyan-600 font-semibold text-sm">BS</span>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="font-medium text-slate-900">Budi Santoso</p>
-                                    <p class="text-sm text-slate-500">Kaleng Aluminium • 1.2 kg</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-slate-900">Rp 18.000</p>
-                                <span
-                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                                    Selesai
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
 
                 <!-- Permintaan Jemput -->
                 <div class="bg-white rounded-xl border border-slate-200 p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-lg font-bold text-slate-900">Permintaan Jemput</h2>
-                        <a href="#" class="text-sm text-teal-600 hover:text-teal-700 font-medium">Lihat Semua</a>
+                        <a href="{{ route('admin.pickup-requests') }}"
+                            class="text-sm text-teal-600 hover:text-teal-700 font-medium">Lihat Semua</a>
                     </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                    <span class="text-purple-600 font-semibold text-sm">DS</span>
+                    @if ($recentPickups->count() > 0)
+                        <div class="space-y-4">
+                            @foreach ($recentPickups as $pickup)
+                                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="w-10 h-10
+                                            @if ($loop->index % 4 == 0) bg-purple-100
+                                            @elseif($loop->index % 4 == 1) bg-orange-100
+                                            @elseif($loop->index % 4 == 2) bg-blue-100
+                                            @else bg-emerald-100 @endif
+                                            rounded-full flex items-center justify-center">
+                                            <span
+                                                class="
+                                                @if ($loop->index % 4 == 0) text-purple-600
+                                                @elseif($loop->index % 4 == 1) text-orange-600
+                                                @elseif($loop->index % 4 == 2) text-blue-600
+                                                @else text-emerald-600 @endif
+                                                font-semibold text-sm">
+                                                {{ strtoupper(substr($pickup->user->name ?? 'NA', 0, 1)) }}{{ strtoupper(substr(explode(' ', $pickup->user->name ?? 'NA')[1] ?? '', 0, 1)) }}
+                                            </span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="font-medium text-slate-900">{{ $pickup->user->name ?? 'Customer' }}
+                                            </p>
+                                            <p class="text-sm text-slate-500">
+                                                {{ $pickup->user->address ?? ($pickup->address ?? 'Alamat tidak tersedia') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        @if ($pickup->status === 'pending')
+                                            <p class="text-sm text-slate-600">{{ $pickup->created_at->format('d M Y') }}
+                                            </p>
+                                            <div class="flex space-x-2 mt-1">
+                                                <form action="{{ route('admin.pickup.accept', $pickup->id) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit"
+                                                        class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium hover:bg-green-200">
+                                                        Terima
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('admin.pickup.reject', $pickup->id) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit"
+                                                        class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium hover:bg-red-200">
+                                                        Tolak
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <p class="text-sm text-slate-600">{{ $pickup->created_at->format('d M Y') }}
+                                            </p>
+                                            @if ($pickup->status === 'dijemput')
+                                                <span
+                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700 mt-1">
+                                                    Dijemput
+                                                </span>
+                                            @elseif ($pickup->status === 'completed')
+                                                <span
+                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 mt-1">
+                                                    Selesai
+                                                </span>
+                                            @elseif ($pickup->status === 'rejected')
+                                                <span
+                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 mt-1">
+                                                    Ditolak
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 mt-1">
+                                                    {{ ucfirst($pickup->status) }}
+                                                </span>
+                                            @endif
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="ml-3">
-                                    <p class="font-medium text-slate-900">Dewi Sartika</p>
-                                    <p class="text-sm text-slate-500">Jl. Merdeka No. 15</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm text-slate-600">25 Nov 2024</p>
-                                <div class="flex space-x-2 mt-1">
-                                    <button
-                                        class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium hover:bg-green-200">Terima</button>
-                                    <button
-                                        class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-medium hover:bg-red-200">Tolak</button>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-
-                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                                    <span class="text-orange-600 font-semibold text-sm">RH</span>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="font-medium text-slate-900">Rudi Hermawan</p>
-                                    <p class="text-sm text-slate-500">Jl. Sudirman No. 8</p>
-                                </div>
+                    @else
+                        <div class="text-center py-12">
+                            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3a4 4 0 118 0v4m-4 8a4 4 0 11-8 0v-1a4 4 0 014-4h4a4 4 0 014 4v1a4 4 0 11-8 0z" />
+                                </svg>
                             </div>
-                            <div class="text-right">
-                                <p class="text-sm text-slate-600">24 Nov 2024</p>
-                                <span
-                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700 mt-1">
-                                    Dijemput
-                                </span>
-                            </div>
+                            <p class="text-slate-500 font-medium">Belum ada permintaan jemput</p>
+                            <p class="text-sm text-slate-400 mt-1">Menunggu permintaan jemput baru</p>
                         </div>
-
-                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <span class="text-blue-600 font-semibold text-sm">LM</span>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="font-medium text-slate-900">Lisa Maharani</p>
-                                    <p class="text-sm text-slate-500">Jl. Diponegoro No. 22</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm text-slate-600">23 Nov 2024</p>
-                                <span
-                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 mt-1">
-                                    Selesai
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>

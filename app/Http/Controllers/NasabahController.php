@@ -17,13 +17,16 @@ class NasabahController extends Controller
         $totalPoints = $user->points->total_points ?? 0;
         $totalTransactions = $user->transactions()->count();
         $pendingPickups = $user->pickupRequests()->where('status', 'pending')->count();
-        
+
+        // Menambahkan variabel totalWeight dari field weight di tabel transactions
+        $totalWeight = $user->transactions()->sum('weight') ?? 0;
+
         $recentTransactions = $user->transactions()
             ->with('waste')
             ->latest()
             ->take(5)
             ->get();
-            
+
         $recentPickups = $user->pickupRequests()
             ->with('waste')
             ->latest()
@@ -34,6 +37,7 @@ class NasabahController extends Controller
             'totalPoints',
             'totalTransactions',
             'pendingPickups',
+            'totalWeight',
             'recentTransactions',
             'recentPickups'
         ));
@@ -48,7 +52,7 @@ class NasabahController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -84,7 +88,7 @@ class NasabahController extends Controller
             ->with('waste')
             ->latest()
             ->paginate(10);
-            
+
         return view('nasabah.transactions', compact('transactions'));
     }
 
@@ -95,7 +99,7 @@ class NasabahController extends Controller
             ->with('waste')
             ->latest()
             ->paginate(10);
-            
+
         return view('nasabah.pickup-requests.index', compact('pickupRequests'));
     }
 
@@ -132,7 +136,7 @@ class NasabahController extends Controller
         if ($pickupRequest->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $pickupRequest->load('waste');
         return view('nasabah.pickup-requests.show', compact('pickupRequest'));
     }
@@ -143,7 +147,7 @@ class NasabahController extends Controller
         if ($pickupRequest->user_id !== Auth::id() || $pickupRequest->status !== 'pending') {
             abort(403);
         }
-        
+
         $wastes = Waste::with('category')->get();
         return view('nasabah.pickup-requests.edit', compact('pickupRequest', 'wastes'));
     }
@@ -154,7 +158,7 @@ class NasabahController extends Controller
         if ($pickupRequest->user_id !== Auth::id() || $pickupRequest->status !== 'pending') {
             abort(403);
         }
-        
+
         $request->validate([
             'waste_id' => 'required|exists:wastes,id',
             'address' => 'required|string|max:500',
@@ -164,7 +168,7 @@ class NasabahController extends Controller
 
         $pickupRequest->update($request->only([
             'waste_id',
-            'address', 
+            'address',
             'date_request',
             'estimated_weight'
         ]));
@@ -178,7 +182,7 @@ class NasabahController extends Controller
         if ($pickupRequest->user_id !== Auth::id() || $pickupRequest->status !== 'pending') {
             abort(403);
         }
-        
+
         $pickupRequest->delete();
         return redirect()->route('nasabah.pickup-requests')->with('success', 'Permintaan jemput sampah berhasil dibatalkan.');
     }

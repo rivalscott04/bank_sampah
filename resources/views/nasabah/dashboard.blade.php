@@ -46,7 +46,7 @@
                     class="glass-effect backdrop-blur-lg bg-gradient-to-br from-yellow-400/90 to-yellow-600/90 overflow-hidden shadow-2xl rounded-3xl transform hover:scale-105 transition-all duration-300 border border-yellow-300/30 animate-fade-in-up">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-yellow-500/30 p-4 rounded-2xl shadow-glow">
+                            <div class="flex-shrink-0 bg-yellow-500 p-4 rounded-2xl shadow-glow">
                                 <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -54,9 +54,9 @@
                             </div>
                             <div class="ml-5 w-0 flex-1">
                                 <dl>
-                                    <dt class="text-base font-semibold text-yellow-100 truncate mb-1">Total Poin Anda
+                                    <dt class="text-base font-semibold text-slate-600 truncate mb-1">Total Poin Anda
                                     </dt>
-                                    <dd class="text-3xl font-bold text-white counter" data-target="{{ $totalPoints }}">
+                                    <dd class="text-3xl font-bold text-slate-900 counter" data-target="{{ $totalPoints }}">
                                         0</dd>
                                 </dl>
                             </div>
@@ -113,13 +113,12 @@
                 </div>
 
                 <!-- Total Berat Sampah -->
-                {{-- <div
+                <div
                     class="glass-effect backdrop-blur-lg bg-white/80 overflow-hidden shadow-2xl rounded-3xl transform hover:scale-105 transition-all duration-300 border border-white/20 animate-fade-in-up animation-delay-600">
                     <div class="p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 bg-blue-100 p-4 rounded-2xl shadow-lg">
-                                <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16l3-1m-3 1l-3-1" />
                                 </svg>
@@ -128,19 +127,19 @@
                                 <dl>
                                     <dt class="text-base font-semibold text-slate-600 truncate mb-1">Total Berat (kg)
                                     </dt>
-                                    <dd class="text-3xl font-bold text-slate-900 counter"
-                                        data-target="{{ $totalBerat }}">0</dd>
+                                    <dd class="text-3xl font-bold text-slate-900 counter" data-target="{{ $totalWeight }}">
+                                        0</dd>
                                 </dl>
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
 
             <!-- Quick Actions -->
-            {{-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 <!-- Daftar Sampah -->
-                <a href="{{ route('nasabah.wastes.index') }}"
+                <a href="{{ route('nasabah.wastes') }}"
                     class="group glass-effect backdrop-blur-lg bg-white/80 overflow-hidden shadow-2xl rounded-3xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border border-white/20 animate-fade-in-up">
                     <div class="p-6">
                         <div class="flex items-center">
@@ -167,7 +166,7 @@
                 </a>
 
                 <!-- Request Jemput -->
-                <a href="{{ route('nasabah.pickup-requests.create') }}"
+                <a href="{{ route('nasabah.pickup-requests') }}"
                     class="group glass-effect backdrop-blur-lg bg-white/80 overflow-hidden shadow-2xl rounded-3xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border border-white/20 animate-fade-in-up animation-delay-200">
                     <div class="p-6">
                         <div class="flex items-center">
@@ -246,7 +245,7 @@
                         </div>
                     </div>
                 </a>
-            </div> --}}
+            </div>
 
             <!-- Recent Transactions & Pickup Requests -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -270,7 +269,8 @@
                                     <div
                                         class="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-100 hover:shadow-lg transition-all duration-300">
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                            <div
+                                                class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                                                 <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -380,7 +380,7 @@
                                 @endforeach
                             </div>
                             <div class="mt-6">
-                                <a href="{{ route('nasabah.pickup-requests.index') }}"
+                                <a href="{{ route('nasabah.pickup-requests') }}"
                                     class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500 transition-colors duration-300">
                                     Lihat semua permintaan
                                     <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
